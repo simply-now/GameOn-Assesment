@@ -152,11 +152,28 @@ main {
       height: 60vh;
       overflow-y: scroll;
     }
+     main > ul {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .messageContainer {
+      max-width: 100%;
+    }
+
     .messageChatBubble {
       padding: 0.5rem 1rem;
+      max-width: 100%;
     }
+
+    .messageItem {
+      min-width: 100%;
+  }
+
     .messageChatBubble .messageItemsContainer .messageItem .messageItemThumbnail {
       text-align: center;
+      max-width: 80%;
+      margin: 0px auto;
     }
     .messageChatBubble .messageItemsContainer .messageItem .messageItemThumbnail img{
       height: 100%;
