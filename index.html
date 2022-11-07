@@ -160,17 +160,21 @@
           main.scrollTop = main.scrollHeight;
             setTimeout(() => {
                 main.scrollTop = main.scrollHeight
+                const listContainer = main.lastElementChild
+                const latestMessage = listContainer.lastElementChild
+                latestMessage.classList.replace('minified', "maxed");
             }, 100)
             setTimeout(() => {
                 main.scrollTop = main.scrollHeight
             }, 300) 
+
         }
       },[]);
 
       return (
             <ul>
                 {messages.map((message, messageIndex) => (
-                    <li id={'message-id-' + messageIndex} className='messageContainer' key={messageIndex}>
+                    <li id={'message-id-' + messageIndex} className='messageContainer minified' key={messageIndex}>
                       <div className='messageChatBubble'>
                         {message.text ? <div className='messageText'>{message.text} </div> : null}
                         {message.items ? <div className='messageItemsContainer'> {message.items.map((item, itemIndex) => (

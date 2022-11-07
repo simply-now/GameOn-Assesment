@@ -41,6 +41,15 @@ main {
   .messageContainer {
     min-width: 200px;
     max-width: 70%;
+    transition: opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  }
+
+  .messageContainer.minified {
+    opacity: 0;
+  }
+
+  .messageContainer.maxed {
+    opacity: 1;
   }
 
   .messageChatBubble {
@@ -54,6 +63,15 @@ main {
     min-width: 200px;
     max-width: 50vw;
     box-shadow: 0 0 2rem rgb(0 0 0 / 8%), 0rem 1rem 1rem -1rem rgb(0 0 0 / 10%);
+    transition: transform .7s ease-in;
+  }
+
+  .messageContainer.minified .messageChatBubble {
+    transform:scaleX(2) scaleY(2) translate(-999px,0px);
+  }
+
+  .messageContainer.maxed .messageChatBubble {
+    transform:scaleX(1) scaleY(1) translate(0px,0px);
   }
 
   .messageText {
