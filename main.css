@@ -16,23 +16,6 @@ main {
   overflow-y: scroll;
 }
 
-@media screen and (max-width: 800px) {
-  aside {
-    grid-column: 1/3;
-    order: 1;
-  }
-  main {
-    grid-column: 1/3;
-    order: 0;
-    width: auto;
-    height: 60vh;
-    overflow-y: scroll;
-  }
-  .messageChatBubble {
-    padding: 0.5rem 1rem;
-  }
-}
-
 /* Added Styles */
   .messageChatBubble > ul, main > ul {
     list-style: none;
@@ -41,11 +24,11 @@ main {
   .messageContainer {
     min-width: 200px;
     max-width: 70%;
-    transition: opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: opacity .25s cubic-bezier(0.455, 0.03, 0.515, 0.955) .25s;
   }
 
   .messageContainer.minified {
-    opacity: 0;
+    opacity: 0.5;
   }
 
   .messageContainer.maxed {
@@ -63,11 +46,11 @@ main {
     min-width: 200px;
     max-width: 50vw;
     box-shadow: 0 0 2rem rgb(0 0 0 / 8%), 0rem 1rem 1rem -1rem rgb(0 0 0 / 10%);
-    transition: transform .7s ease-in;
+    transition: transform .25s ease-in;
   }
 
   .messageContainer.minified .messageChatBubble {
-    transform:scaleX(2) scaleY(2) translate(-999px,0px);
+    transform:scaleX(2) scaleY(2) translate(-100%,0px);
   }
 
   .messageContainer.maxed .messageChatBubble {
@@ -105,7 +88,7 @@ main {
     min-width: 230px;
   }
 
-  .messageChatBubble .messageItemsContainer .messageItem .messageItemThumbnail {
+  .messageChatBubble .messageItemsContainer .messageItem .messageItemThumbnail img{
     height: auto;
     max-height: 300px;
     width: 100%;
@@ -146,4 +129,40 @@ main {
   .messageTimestamp {
     margin: 0rem 1rem;
     font-family: 'Space+Mono' monospace;
+    transition: opacity .5s cubic-bezier(0.455, 0.03, 0.515, 0.955) .5s;
+  }
+
+  .messageContainer.minified .messageTimestamp {
+    opacity: 0;
+  }
+
+  .messageContainer.maxed .messageTimestamp {
+    opacity: 1;
+  }
+
+  @media screen and (max-width: 800px) {
+    aside {
+      grid-column: 1/3;
+      order: 1;
+    }
+    main {
+      grid-column: 1/3;
+      order: 0;
+      width: auto;
+      height: 60vh;
+      overflow-y: scroll;
+    }
+    .messageChatBubble {
+      padding: 0.5rem 1rem;
+    }
+    .messageChatBubble .messageItemsContainer .messageItem .messageItemThumbnail {
+      text-align: center;
+    }
+    .messageChatBubble .messageItemsContainer .messageItem .messageItemThumbnail img{
+      height: 100%;
+      max-height: 150px;
+      width: auto;
+      max-width: 100%;
+      text-align: center;
+    }
   }

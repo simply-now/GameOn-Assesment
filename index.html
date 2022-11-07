@@ -157,15 +157,19 @@
             ]
           })
           const main = document.getElementById('main-chat-root')
-          main.scrollTop = main.scrollHeight;
             setTimeout(() => {
-                main.scrollTop = main.scrollHeight
                 const listContainer = main.lastElementChild
                 const latestMessage = listContainer.lastElementChild
-                latestMessage.classList.replace('minified', "maxed");
+                if (latestMessage.classList) {
+                  latestMessage.classList.replace('minified', "maxed");
+                }
+                if (latestMessage.offsetTop) {
+                  const topPos = latestMessage.offsetTop + main.scrollTop - main.offsetTop;
+                  console.log(topPos)
+                  main.scrollTop = topPos
+                }
             }, 100)
             setTimeout(() => {
-                main.scrollTop = main.scrollHeight
             }, 300) 
 
         }
@@ -179,7 +183,9 @@
                         {message.text ? <div className='messageText'>{message.text} </div> : null}
                         {message.items ? <div className='messageItemsContainer'> {message.items.map((item, itemIndex) => (
                           <div id={'itemIndex-' + itemIndex} className='messageItem' key={itemIndex}>
-                              {item.thumbnailUrl ? <div><img alt={'thumbnail for ' + item.title} className='messageItemThumbnail' src={item.thumbnailUrl} /> </div> : null}
+                              {item.thumbnailUrl ? <div className='messageItemThumbnail'>
+                                  <img alt={'thumbnail for ' + item.title} className='messageItemThumbnailImage' src={item.thumbnailUrl} /> 
+                                </div> : null}
                               <div>
                                 {item.title ? <div className='messageItemTitle'>{item.title} </div> : null}
                                 {item.url ? <div>
