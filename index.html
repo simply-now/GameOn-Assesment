@@ -1,16 +1,17 @@
 <head>
-  <title>Front-end takehome assignment</title>
+  <title>Front-end take home assignment</title>
   <link rel="stylesheet" href="./main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&family=Space+Mono">
 </head>
 <body>
   <aside>
-    <h1>GameOn Front-end takehome assignment</h1>
+    <h1>GameOn Front-end take home assignment</h1>
     <p>Hello! Welcome to the GameOn take home assignment! ＼(＾▽＾)／</p>
     <p>
       The goal of this assignment is to check that you have the base skills
       necessary to be successful on the team. Don't worry, there's no secret
       tricks, or super special answers we're looking for. We are not looking to
-      "take off points" for random trivial things like mispelling a variable
+      "take off points" for random trivial things like misspelling a variable
       name. That being said, do focus on making sure your solution is not
       "sloppy." Make it clean, simple, and clear. We want you to succeed!
       ٩(◕‿◕｡)۶
@@ -33,7 +34,7 @@
     <h2>Objective</h2>
     <p>Your task is to implement a chat renderer!</p>
     <p>
-      You will receive a simluated message object via our mock API class. Your
+      You will receive a simulated message object via our mock API class. Your
       task is to take this message and render it in the
       <code>main</code> element in this file.
     </p>
@@ -130,8 +131,73 @@
     <img src="./reference-with-redlines.png" />
   </aside>
 
-  <main>Render chat messages here!</main>
+  <main id="main-chat-root">Render chat messages here!</main>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script src="./chat-api.js"></script>
-  <script src="./main.js"></script>
+  
+  <script type="text/babel">
+
+
+    function messageElements(props) {
+      const [messages, setMessages] = React.useState([]);
+
+      React.useEffect(() => {
+        const chatApi = new ChatApi(handleMessageReceived)
+
+        function handleMessageReceived(message) {
+          setMessages(prevMessages => {
+            return [
+              ...prevMessages,
+              message
+            ]
+          })
+          const main = document.getElementById('main-chat-root')
+          main.scrollTop = main.scrollHeight;
+            setTimeout(() => {
+                main.scrollTop = main.scrollHeight
+            }, 100)
+            setTimeout(() => {
+                main.scrollTop = main.scrollHeight
+            }, 300) 
+        }
+      },[]);
+
+      return (
+            <ul>
+                {messages.map((message, messageIndex) => (
+                    <li id={'message-id-' + messageIndex} className='messageContainer' key={messageIndex}>
+                      <div className='messageChatBubble'>
+                        {message.text ? <div className='messageText'>{message.text} </div> : null}
+                        {message.items ? <div className='messageItemsContainer'> {message.items.map((item, itemIndex) => (
+                          <div id={'itemIndex-' + itemIndex} className='messageItem' key={itemIndex}>
+                              {item.thumbnailUrl ? <div><img alt={'thumbnail for ' + item.title} className='messageItemThumbnail' src={item.thumbnailUrl} /> </div> : null}
+                              <div>
+                                {item.title ? <div className='messageItemTitle'>{item.title} </div> : null}
+                                {item.url ? <div>
+                                <a className='button' href={item.url} target='_blank'>
+                                  {item.cta}
+                                </a>
+                                </div> : null}
+                              </div>
+                          </div>
+                        ))} </div> : null}
+                      </div>
+                      {message.timestamp ? <div className='messageTimestamp'>{new Date(message.timestamp).toLocaleString('default', { month: 'short', day: '2-digit', hour: "2-digit", minute: "2-digit"})} </div> : null}
+                    </li>
+                ))}
+            </ul>
+    )
+
+    }
+
+
+    const rootNode = document.getElementById('main-chat-root');
+    const root = ReactDOM.createRoot(rootNode);
+    root.render(React.createElement(messageElements));
+  </script>
+
 </body>
